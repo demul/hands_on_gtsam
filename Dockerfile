@@ -70,7 +70,7 @@ RUN cmake \
 RUN make -j4 install
 
 ## Copy repository
-COPY . /root/
+COPY . /root/hands_on_gtsam/
 
 ## Eigen
 WORKDIR /root/hands_on_gtsam/third_party/eigen/
@@ -86,7 +86,6 @@ WORKDIR /root/hands_on_gtsam/third_party/gtsam/build/
 ########## TODO : ##########
 # -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF 플래그는 20~30% 정도의 성능저하를 유발한다.
 # GTSAM에서 해당 플래그를 의존패키지들에 자동으로 상속시켜주지 못하는 문제이며, OFF로 놓는 것은 임시방편임.
-# https://neubility.atlassian.net/browse/ATNM-1209
 RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DGTSAM_USE_SYSTEM_EIGEN=ON -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF
 ############################
 RUN make install
@@ -98,4 +97,4 @@ WORKDIR /root/hands_on_gtsam/third_party/opengv/build
 RUN cmake .. -DEIGEN_INCLUDE_DIR="/usr/local/include/eigen3" -DBUILD_TESTS=ON -DCMAKE_INSTALL_PREFIX="/usr/local"
 RUN make install
 
-WORKDIR /root/hands_on_gtsam
+WORKDIR /root/hands_on_gtsam/
