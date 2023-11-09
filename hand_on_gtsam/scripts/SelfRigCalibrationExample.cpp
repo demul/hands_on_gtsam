@@ -36,6 +36,7 @@
 #include <gtsam/nonlinear/Values.h>
 
 // SFM-specific factors
+#include <gtsam/geometry/Cal3DS2.h>
 #include <gtsam_unstable/slam/ProjectionFactorPPPC.h>  // does calibration !
 
 // Standard headers
@@ -57,10 +58,10 @@ Eigen::Matrix3d convert(double yaw, double pitch, double roll)
 
 int main(int argc, char* argv[])
 {
-    vector<Cal3_S2> intrinsics;
-    intrinsics.emplace_back(45.0, 45.0, 0.0, 45.0, 45.0);
-    intrinsics.emplace_back(40.0, 40.0, 0.0, 40.0, 40.0);
-    intrinsics.emplace_back(55.0, 55.0, 0.0, 55.0, 55.0);
+    vector<Cal3DS2> intrinsics;
+    intrinsics.emplace_back(45.0, 45.0, 0.0, 45.0, 45.0, 0.0001, 0.0001, 0.0001, 0.0001);
+    intrinsics.emplace_back(40.0, 40.0, 0.0, 40.0, 40.0, 0.0001, 0.0001, 0.0001, 0.0001);
+    intrinsics.emplace_back(55.0, 55.0, 0.0, 55.0, 55., 0.0001, 0.0001, 0.0001, 0.00010);
 
     vector<Pose3> transforms;
     transforms.emplace_back(Rot3::Ypr(0, 0, 0), Point3(0, 0, 0));
@@ -73,7 +74,7 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    vector<PinholeCamera<Cal3_S2>> rig_set;
+    vector<PinholeCamera<Cal3DS2>> rig_set;
     for (size_t camera_index = 0; camera_index < intrinsics.size(); camera_index++)
     {
         rig_set.emplace_back(transforms[camera_index], intrinsics[camera_index]);
@@ -97,17 +98,17 @@ int main(int argc, char* argv[])
     auto measurementNoise = noiseModel::Isotropic::Sigma(2, 1.0);
     for (size_t camera_index = 0; camera_index < rig_set.size(); camera_index++)
     {
-        PinholeCamera<Cal3_S2>& rig = rig_set[camera_index];
+        PinholeCamera<Cal3DS2>& rig = rig_set[camera_index];
         for (size_t pose_index = 0; pose_index < poses.size(); pose_index++)
         {
-            PinholeCamera<Cal3_S2> camera(poses[pose_index].compose(rig.pose()), rig.calibration());
+            PinholeCamera<Cal3DS2> camera(poses[pose_index].compose(rig.pose()), rig.calibration());
             for (size_t point_index = 0; point_index < points.size(); point_index++)
             {
                 Point2 measurement = camera.project(points[point_index]);
                 // The only real difference with the Visual SLAM example is that here we
                 // use a different factor type, that also calculates the Jacobian with
                 // respect to calibration
-                graph.emplace_shared<ProjectionFactorPPPC<Pose3, Point3, Cal3_S2>>(
+                graph.emplace_shared<ProjectionFactorPPPC<Pose3, Point3, Cal3DS2>>(
                     measurement,
                     measurementNoise,
                     Symbol('x', pose_index),
@@ -146,7 +147,8 @@ int main(int argc, char* argv[])
 
     for (size_t camera_index = 0; camera_index < rig_set.size(); camera_index++)
     {
-        initialEstimate.insert(Symbol('K', camera_index), Cal3_S2(45.0, 45.0, 0.0, 45.0, 45.0));
+        initialEstimate.insert(
+            Symbol('K', camera_index), Cal3DS2(45.0, 45.0, 0.0, 45.0, 45.0, 0.0001, 0.0001, 0.0001, 0.0001));
         initialEstimate.insert(
             Symbol('r', camera_index),
             rig_set[camera_index].pose().compose(Pose3(
