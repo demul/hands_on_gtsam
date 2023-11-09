@@ -98,3 +98,6 @@ RUN cmake .. -DEIGEN_INCLUDE_DIR="/usr/local/include/eigen3" -DBUILD_TESTS=ON -D
 RUN make install
 
 WORKDIR /root/hands_on_gtsam/
+
+## Add local library path
+RUN echo "export LD_LIBRARY_PATH=/usr/local/lib" >> ~/.bashrc
