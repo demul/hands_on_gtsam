@@ -65,3 +65,11 @@ target_link_libraries(rigcal_exe PUBLIC
 target_include_directories(rigcal_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/hand_on_gtsam/include/>
 )
+
+add_executable(rigcal_k3_exe hand_on_gtsam/scripts/SelfRigCalibrationExample_k3.cpp)
+target_link_libraries(rigcal_k3_exe PUBLIC
+  gtsam
+)
+target_include_directories(rigcal_k3_exe PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/hand_on_gtsam/include/>
+)
