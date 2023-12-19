@@ -16,21 +16,21 @@
  * @date Feb 7, 2012
  */
 
-#include <gtsam/geometry/Pose2.h>
-#include <gtsam/geometry/Unit3.h>
-#include <gtsam/geometry/EssentialMatrix.h>
+#include <gtsam/geometry/Cal3Bundler.h>
+#include <gtsam/geometry/Cal3DS2.h>
+#include <gtsam/geometry/Cal3Unified.h>
 #include <gtsam/geometry/Cal3_S2.h>
 #include <gtsam/geometry/Cal3_S2Stereo.h>
 #include <gtsam/geometry/CalibratedCamera.h>
+#include <gtsam/geometry/EssentialMatrix.h>
 #include <gtsam/geometry/PinholeCamera.h>
-#include <gtsam/geometry/Cal3DS2.h>
-#include <gtsam/geometry/Cal3Bundler.h>
-#include <gtsam/geometry/Cal3Unified.h>
+#include <gtsam/geometry/Pose2.h>
 #include <gtsam/geometry/StereoCamera.h>
 #include <gtsam/geometry/StereoPoint2.h>
+#include <gtsam/geometry/Unit3.h>
 
-#include <gtsam/base/serializationTestHelpers.h>
 #include <CppUnitLite/TestHarness.h>
+#include <gtsam/base/serializationTestHelpers.h>
 
 using namespace std;
 using namespace gtsam;
@@ -57,7 +57,7 @@ static StereoCamera cam2(pose3, cal4ptr);
 static StereoPoint2 spt(1.0, 2.0, 3.0);
 
 /* ************************************************************************* */
-TEST (Serialization, text_geometry) {
+TEST(Serialization, text_geometry) {
   EXPECT(equalsObj<gtsam::Point2>(Point2(1.0, 2.0)));
   EXPECT(equalsObj<gtsam::Pose2>(Pose2(1.0, 2.0, 0.3)));
   EXPECT(equalsObj<gtsam::Rot2>(Rot2::fromDegrees(30.0)));
@@ -82,7 +82,7 @@ TEST (Serialization, text_geometry) {
 }
 
 /* ************************************************************************* */
-TEST (Serialization, xml_geometry) {
+TEST(Serialization, xml_geometry) {
   EXPECT(equalsXML<gtsam::Point2>(Point2(1.0, 2.0)));
   EXPECT(equalsXML<gtsam::Pose2>(Pose2(1.0, 2.0, 0.3)));
   EXPECT(equalsXML<gtsam::Rot2>(Rot2::fromDegrees(30.0)));
@@ -106,7 +106,7 @@ TEST (Serialization, xml_geometry) {
 }
 
 /* ************************************************************************* */
-TEST (Serialization, binary_geometry) {
+TEST(Serialization, binary_geometry) {
   EXPECT(equalsBinary<gtsam::Point2>(Point2(1.0, 2.0)));
   EXPECT(equalsBinary<gtsam::Pose2>(Pose2(1.0, 2.0, 0.3)));
   EXPECT(equalsBinary<gtsam::Rot2>(Rot2::fromDegrees(30.0)));
@@ -130,5 +130,8 @@ TEST (Serialization, binary_geometry) {
 }
 
 /* ************************************************************************* */
-int main() { TestResult tr; return TestRegistry::runAllTests(tr); }
+int main() {
+  TestResult tr;
+  return TestRegistry::runAllTests(tr);
+}
 /* ************************************************************************* */
