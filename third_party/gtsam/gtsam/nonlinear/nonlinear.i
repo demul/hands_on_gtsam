@@ -315,7 +315,6 @@ class Values {
   void insert(size_t j, const gtsam::Cal3_S2& cal3_s2);
   void insert(size_t j, const gtsam::Cal3DS2& cal3ds2);
   void insert(size_t j, const gtsam::Cal3DS2_k3& cal3ds2_k3);
-  void insert(size_t j, const gtsam::Cal3DS2_k3& cal3ds2_k3);
   void insert(size_t j, const gtsam::Cal3Bundler& cal3bundler);
   void insert(size_t j, const gtsam::Cal3Fisheye& cal3fisheye);
   void insert(size_t j, const gtsam::Cal3Unified& cal3unified);
@@ -340,7 +339,6 @@ class Values {
   void update(size_t j, const gtsam::Unit3& unit3);
   void update(size_t j, const gtsam::Cal3_S2& cal3_s2);
   void update(size_t j, const gtsam::Cal3DS2& cal3ds2);
-  void update(size_t j, const gtsam::Cal3DS2_k3& cal3ds2_k3);
   void update(size_t j, const gtsam::Cal3DS2_k3& cal3ds2_k3);
   void update(size_t j, const gtsam::Cal3Bundler& cal3bundler);
   void update(size_t j, const gtsam::Cal3Fisheye& cal3fisheye);
