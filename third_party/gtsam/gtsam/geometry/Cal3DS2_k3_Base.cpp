@@ -67,8 +67,8 @@ Eigen::Matrix<double, 2, 10> D2dcalibration(double x,
   Matrix25 DR1;
   DR1 << pnx, 0.0, pny, 1.0, 0.0, 0.0, pny, 0.0, 0.0, 1.0;
   Matrix25 DR2;
-  DR2 << x * rr, x * r4, x * r6, 2 * xy, rr + 2 * xx,  //
-      y * rr, y * r4, y * r6, rr + 2 * yy, 2 * xy;
+  DR2 << x * rr, x * r4, 2 * xy, rr + 2 * xx, x * r6,  //
+      y * rr, y * r4, rr + 2 * yy, 2 * xy, y * r6;
   Eigen::Matrix<double, 2, 10> D;
   D << DR1, DK * DR2;
   return D;
