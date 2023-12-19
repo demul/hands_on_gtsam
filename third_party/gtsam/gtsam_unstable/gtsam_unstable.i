@@ -29,6 +29,7 @@ virtual class gtsam::HessianFactor;
 virtual class gtsam::JacobianFactor;
 class gtsam::Cal3_S2;
 class gtsam::Cal3DS2;
+class gtsam::Cal3DS2_k3;
 class gtsam::GaussianFactorGraph;
 class gtsam::NonlinearFactorGraph;
 class gtsam::Ordering;
@@ -578,8 +579,8 @@ virtual class BatchFixedLagSmoother : gtsam::FixedLagSmoother {
 
   gtsam::LevenbergMarquardtParams params() const;
   template <VALUE = {gtsam::Point2, gtsam::Rot2, gtsam::Pose2, gtsam::Point3,
-                     gtsam::Rot3, gtsam::Pose3, gtsam::Cal3_S2, gtsam::Cal3DS2,
-                     Vector, Matrix}>
+                     gtsam::Rot3, gtsam::Pose3, gtsam::Cal3_S2, gtsam::Cal3DS2, 
+                     gtsam::Cal3DS2_k3, Vector, Matrix}>
   VALUE calculateEstimate(size_t key) const;
 };
 
@@ -744,6 +745,7 @@ virtual class OdometryFactorBase : gtsam::NoiseModelFactor {
 };
 
 #include <gtsam/geometry/Cal3DS2.h>
+#include <gtsam/geometry/Cal3DS2_k3.h>
 #include <gtsam_unstable/slam/ProjectionFactorPPP.h>
 template<POSE, LANDMARK, CALIBRATION>
 virtual class ProjectionFactorPPP : gtsam::NoiseModelFactor {
@@ -763,6 +765,7 @@ virtual class ProjectionFactorPPP : gtsam::NoiseModelFactor {
 };
 typedef gtsam::ProjectionFactorPPP<gtsam::Pose3, gtsam::Point3, gtsam::Cal3_S2> ProjectionFactorPPPCal3_S2;
 typedef gtsam::ProjectionFactorPPP<gtsam::Pose3, gtsam::Point3, gtsam::Cal3DS2> ProjectionFactorPPPCal3DS2;
+typedef gtsam::ProjectionFactorPPP<gtsam::Pose3, gtsam::Point3, gtsam::Cal3DS2_k3> ProjectionFactorPPPCal3DS2_k3;
 
 
 #include <gtsam_unstable/slam/ProjectionFactorPPPC.h>
@@ -783,5 +786,6 @@ virtual class ProjectionFactorPPPC : gtsam::NoiseModelFactor {
 };
 typedef gtsam::ProjectionFactorPPPC<gtsam::Pose3, gtsam::Point3, gtsam::Cal3_S2> ProjectionFactorPPPCCal3_S2;
 typedef gtsam::ProjectionFactorPPPC<gtsam::Pose3, gtsam::Point3, gtsam::Cal3DS2> ProjectionFactorPPPCCal3DS2;
+typedef gtsam::ProjectionFactorPPPC<gtsam::Pose3, gtsam::Point3, gtsam::Cal3DS2_k3> ProjectionFactorPPPCCal3DS2_k3;
 
 } //\namespace gtsam
