@@ -55,20 +55,20 @@ Point2 uncalibrate_(const Cal3DS2_k3& k, const Point2& pt) { return k.uncalibrat
 TEST(Cal3DS2_k3, Duncalibrate1) {
   Matrix computed;
   K.uncalibrate(p, computed, boost::none);
-  Matrix numerical = numericalDerivative21(uncalibrate_, K, p, 1e-7);
-  CHECK(assert_equal(numerical, computed, 1e-4));
+  Matrix numerical = numericalDerivative21(uncalibrate_, K, p, 1e-6);
+  CHECK(assert_equal(numerical, computed, 1e-5));
   Matrix separate = K.D2d_calibration(p);
-  CHECK(assert_equal(numerical, separate, 1e-4));
+  CHECK(assert_equal(numerical, separate, 1e-5));
 }
 
 /* ************************************************************************* */
 TEST(Cal3DS2_k3, Duncalibrate2) {
   Matrix computed;
   K.uncalibrate(p, boost::none, computed);
-  Matrix numerical = numericalDerivative22(uncalibrate_, K, p, 1e-7);
-  CHECK(assert_equal(numerical, computed, 1e-4));
+  Matrix numerical = numericalDerivative22(uncalibrate_, K, p, 1e-6);
+  CHECK(assert_equal(numerical, computed, 1e-5));
   Matrix separate = K.D2d_intrinsic(p);
-  CHECK(assert_equal(numerical, separate, 1e-4));
+  CHECK(assert_equal(numerical, separate, 1e-5));
 }
 
 Point2 calibrate_(const Cal3DS2_k3& k, const Point2& pt) { return k.calibrate(pt); }
@@ -80,9 +80,9 @@ TEST(Cal3DS2_k3, Dcalibrate) {
   Matrix Dcal, Dp;
   K.calibrate(pi, Dcal, Dp);
   Matrix numerical1 = numericalDerivative21(calibrate_, K, pi, 1e-7);
-  CHECK(assert_equal(numerical1, Dcal, 1e-4));
+  CHECK(assert_equal(numerical1, Dcal, 1e-5));
   Matrix numerical2 = numericalDerivative22(calibrate_, K, pi, 1e-7);
-  CHECK(assert_equal(numerical2, Dp, 1e-4));
+  CHECK(assert_equal(numerical2, Dp, 1e-5));
 }
 
 /* ************************************************************************* */
