@@ -10,7 +10,7 @@
  * -------------------------------------------------------------------------- */
 
 /**
- * @file  testCal3DS2.cpp
+ * @file  testCal3DS2_k3.cpp
  * @brief Unit tests for Cal3DS2_k3 calibration model.
  */
 
